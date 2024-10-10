@@ -1,0 +1,41 @@
+{
+	"name": "string-segmenter",
+	"version": "1.0.0",
+	"description": "Split a string in to sentences. Supports multiple languages.",
+	"main": "./dist/index.cjs",
+	"module": "./dist/index.mjs",
+	"types": "./dist/index.d.cts",
+	"exports": {
+		"require": {
+			"default": "./dist/index.cjs",
+			"types": "./dist/index.d.cts"
+		},
+		"import": {
+			"default": "./dist/index.mjs",
+			"types": "./dist/index.d.mts"
+		}
+	},
+	"files": [
+		"dist"
+	],
+	"scripts": {
+		"build": "pkgroll --clean-dist --src lib --target=node14.18.0 --minify --sourcemap",
+		"dev": "glob -c \"node --import tsx --watch --test\" \"**/*.test.ts\"",
+		"prepublishOnly": "npm run build",
+		"test": "glob -c \"node --import tsx --test\" \"**/*.test.ts\""
+	},
+	"keywords": [
+		"nlp",
+		"string-segmentation",
+		"string",
+		"text-manipulation"
+	],
+	"author": "Matthew Pietz <sirlancelot@gmail.com>",
+	"license": "ISC",
+	"devDependencies": {
+		"@types/node": "22.7.5",
+		"glob": "11.0.0",
+		"pkgroll": "2.5.0",
+		"tsx": "4.19.1"
+	}
+}

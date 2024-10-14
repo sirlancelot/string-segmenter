@@ -29,9 +29,9 @@ export function* splitBySentence(
 	let continuationIndex: number | undefined
 	let continuation = ""
 	for (const { segment, index } of segmenter.segment(input)) {
-		const [lastWord] = segment.match(rLastWord) || []
+		const match = segment.match(rLastWord)
 
-		if (lastWord && abbreviations.has(lastWord.toLocaleLowerCase(locale))) {
+		if (match && abbreviations.has(match[0].toLocaleLowerCase(locale))) {
 			continuationIndex = continuationIndex ?? index
 			continuation += segment
 			continue

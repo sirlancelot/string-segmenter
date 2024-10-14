@@ -1,10 +1,15 @@
-import * as abbreviations from "./abbreviations/index.js"
 import { cached } from "./util.js"
 
-const makeSegmenter = cached((locale: Intl.LocalesArgument) => ({
-	abbreviations: new Set<string>(
-		abbreviations[String(locale) as keyof typeof abbreviations] ?? []
-	),
+function fetchAbbreviationsSync(locale: string): string[] {
+	try {
+		return require(`./abbreviations/${locale}.json`)
+	} catch {
+		return []
+	}
+}
+
+const makeSegmenter = cached((locale: string) => ({
+	abbreviations: new Set(fetchAbbreviationsSync(locale)),
 	segmenter: new Intl.Segmenter(locale, { granularity: "sentence" }),
 }))
 
@@ -18,7 +23,7 @@ export function* splitBySentence(
 	if (!input || typeof input !== "string")
 		throw new TypeError("input must be a string")
 
-	const { abbreviations, segmenter } = makeSegmenter(locale)
+	const { abbreviations, segmenter } = makeSegmenter(locale.toString())
 	const rLastWord = /(?<=\s|^)\S+(?=\s+$)/
 
 	let continuationIndex: number | undefined

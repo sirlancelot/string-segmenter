@@ -20,7 +20,7 @@
 		"dist"
 	],
 	"scripts": {
-		"build": "pkgroll --clean-dist --src lib --target=node14.18.0 --minify --sourcemap",
+		"build": "pkgroll --clean-dist --src lib --target=node18 --minify --sourcemap && cp -r lib/abbreviations dist",
 		"dev": "glob -c \"node --import tsx --watch --test\" \"**/*.test.ts\"",
 		"prepublishOnly": "npm run build",
 		"test": "glob -c \"node --import tsx --test\" \"**/*.test.ts\""

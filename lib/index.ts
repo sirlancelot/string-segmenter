@@ -19,7 +19,7 @@ const makeSegmenter = cached((locale: string) => ({
 export function* splitBySentence(
 	input: string,
 	locale: Intl.LocalesArgument = "en"
-) {
+): Generator<Intl.SegmentData> {
 	if (!input || typeof input !== "string")
 		throw new TypeError("input must be a string")
 

@@ -31,7 +31,13 @@ export function* splitBySentence(
 	for (const { segment, index } of segmenter.segment(input)) {
 		const match = segment.match(rLastWord)
 
-		if (match && abbreviations.has(match[0].toLocaleLowerCase(locale))) {
+		if (
+			match &&
+			// 1. The last word is an abbreviation.
+			(abbreviations.has(match[0].toLocaleLowerCase(locale)) ||
+				// 2. A closing parenthesis without a period.
+				match[0].endsWith(")"))
+		) {
 			continuationIndex = continuationIndex ?? index
 			continuation += segment
 			continue

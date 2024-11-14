@@ -15,7 +15,7 @@ for (const [language, locale, corpus] of [
 		[
 			"Dr. John Smith, Jr. gave a lecture.",
 			"As of 2.14.2023, the average price of apples is $1.31 per pound!",
-			"Hello Mrs. Maple, could you call me back?",
+			"There's pool, pinball, Ms. Pac Man, tvs for Football (or playoff baseball!!!!) and they are kid friendly on one half of the bar.",
 		],
 	],
 	[

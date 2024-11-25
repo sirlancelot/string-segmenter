@@ -17,17 +17,19 @@ const makeSegmenter = cached((locale: string) => ({
  * Split a string into sentences, respecting common abbreviations.
  */
 export function* splitBySentence(
-	input: string,
+	rawInput: string,
 	locale: Intl.LocalesArgument = "en"
 ): Generator<Intl.SegmentData> {
-	if (!input || typeof input !== "string")
+	if (!rawInput || typeof rawInput !== "string")
 		throw new TypeError("input must be a string")
 
 	const { abbreviations, segmenter } = makeSegmenter(locale.toString())
 	const rLastWord = /(?<=\s|^)\S+(?=\s+$)/
+	const input = rawInput.replaceAll(/(?<=\.\s+)\S/g, (char) =>
+		char.toLocaleUpperCase()
+	)
 
-	let continuationIndex: number | undefined
-	let continuation = ""
+	let left = 0
 	for (const { segment, index } of segmenter.segment(input)) {
 		const match = segment.match(rLastWord)
 
@@ -37,20 +39,17 @@ export function* splitBySentence(
 			(abbreviations.has(match[0].toLocaleLowerCase(locale)) ||
 				// 2. A closing parenthesis without a period.
 				match[0].endsWith(")"))
-		) {
-			continuationIndex = continuationIndex ?? index
-			continuation += segment
+		)
 			continue
-		}
 
+		const right = index + segment.length
 		yield {
-			segment: continuation + segment,
-			index: continuationIndex ?? index,
-			input,
+			segment: rawInput.slice(left, right),
+			index: left,
+			input: rawInput,
 		}
 
-		continuation = ""
-		continuationIndex = undefined
+		left = right
 	}
 }
 

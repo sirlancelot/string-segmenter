@@ -34,7 +34,7 @@
 	"author": "Matthew Pietz <sirlancelot@gmail.com>",
 	"license": "ISC",
 	"devDependencies": {
-		"@types/node": "22.9.0",
+		"@types/node": "22.9.4",
 		"glob": "11.0.0",
 		"pkgroll": "2.5.1",
 		"tsx": "4.19.2"

@@ -20,9 +20,9 @@ export function* splitBySentence(
 	rawInput: string,
 	locale: Intl.LocalesArgument = "en"
 ): Generator<Intl.SegmentData> {
-	if (!rawInput || typeof rawInput !== "string")
+	if (!rawInput) return
+	if (typeof rawInput !== "string")
 		throw new TypeError("input must be a string")
-
 	const { abbreviations, segmenter } = makeSegmenter(locale.toString())
 	const rLastWord = /(?<=\s|^)\S+(?=\s+$)/
 	const input = rawInput.replaceAll(/(?<=\.\s+)\S/g, (char) =>

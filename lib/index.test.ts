@@ -53,7 +53,11 @@ for (const [language, locale, corpus] of [
 }
 
 test("Throws on invalid input", ({ assert }) => {
-	assert.throws(() => [...splitBySentence("")])
-	assert.throws(() => [...splitBySentence(undefined as any)])
 	assert.throws(() => [...splitBySentence(42 as any)])
+	assert.throws(() => [...splitBySentence({} as any)])
+	assert.throws(() => [...splitBySentence([] as any)])
+})
+
+test("Returns empty on empty input", ({ assert }) => {
+	assert.deepEqual([...splitBySentence("")], [])
 })
